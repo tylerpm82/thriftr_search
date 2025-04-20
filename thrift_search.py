@@ -64,10 +64,11 @@ def index():
     if request.method == 'POST':
         address = request.form['address']
         store_filter = request.form.get('filter', 'both')
+        min_rating = float(request.form.get('rating', 0))
         lat, lng = geocode_address(address)
         
         if lat and lng:
-            nearest = get_closest_stores(lat, lng, filter_by = store_filter)
+        nearest = get_closest_stores(lat, lng, filter_by=store_filter, min_rating=min_rating)
             results_html = "<h3>Nearest Thrift Stores:</h3><ul>"
             for dist, store in nearest:
                 results_html += f"<li><b>{store['name']}</b><br>{store['address']}<br>📍 {round(dist, 2)} miles away</li>"
@@ -147,14 +148,25 @@ def index():
     <div class="container">
         <h2>🧭 Find Thrift Stores Near You</h2>
         <form method="POST">
-    <input type="text" name="address" placeholder="Enter your address..." required>
-    <select name="filter" style="padding: 10px; border-radius: 6px;">
-        <option value="both">All</option>
-        <option value="thrift_store">Thrift Stores Only</option>
-        <option value="coffee_shop">Coffee Shops Only</option>
-    </select>
-    <input type="submit" value="Search">
+    <div style="display: flex; justify-content: center; margin-bottom: 10px;">
+        <input type="text" name="address" placeholder="Enter your address..." required style="flex: 1; max-width: 400px; padding: 10px; border-radius: 6px; border: 1px solid #ccc;">
+    </div>
+    <div style="display: flex; justify-content: center; gap: 10px;">
+        <select name="filter" style="padding: 10px; border-radius: 6px;">
+            <option value="both">All</option>
+            <option value="thrift_store">Thrift Stores Only</option>
+            <option value="coffee_shop">Coffee Shops Only</option>
+        </select>
+        <select name="rating" style="padding: 10px; border-radius: 6px;">
+            <option value="0">All Ratings</option>
+            <option value="4">4+ Stars</option>
+            <option value="3">3+ Stars</option>
+            <option value="2">2+ Stars</option>
+        </select>
+        <input type="submit" value="Search" style="padding: 10px 16px; background-color: #E3A87B; border: none; color: white; border-radius: 6px; font-weight: bold;">
+    </div>
 </form>
+
 
         {results_html}
     </div>
