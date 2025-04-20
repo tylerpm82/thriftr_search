@@ -68,7 +68,7 @@ def index():
         lat, lng = geocode_address(address)
         
         if lat and lng:
-        nearest = get_closest_stores(lat, lng, filter_by=store_filter, min_rating=min_rating)
+            nearest = get_closest_stores(lat, lng, filter_by=store_filter, min_rating=min_rating)
             results_html = "<h3>Nearest Thrift Stores:</h3><ul>"
             for dist, store in nearest:
                 results_html += f"<li><b>{store['name']}</b><br>{store['address']}<br>📍 {round(dist, 2)} miles away</li>"
