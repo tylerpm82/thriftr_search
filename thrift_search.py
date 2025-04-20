@@ -147,25 +147,27 @@ def index():
 <body>
     <div class="container">
         <h2>🧭 Find Thrift Stores Near You</h2>
-        <form method="POST">
-    <div style="display: flex; justify-content: center; margin-bottom: 10px;">
-        <input type="text" name="address" placeholder="Enter your address..." required style="flex: 1; max-width: 400px; padding: 10px; border-radius: 6px; border: 1px solid #ccc;">
+        <form method="POST" style="width: 100%; max-width: 600px; margin: 0 auto;">
+    <div style="margin-bottom: 10px;">
+        <input type="text" name="address" placeholder="Enter your address..." required
+               style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #ccc; box-sizing: border-box;">
     </div>
-    <div style="display: flex; justify-content: center; gap: 10px;">
-        <select name="filter" style="padding: 10px; border-radius: 6px;">
+    <div style="display: flex; justify-content: space-between; gap: 10px;">
+        <select name="filter" style="flex: 1; padding: 10px; border-radius: 6px;">
             <option value="both">All</option>
             <option value="thrift_store">Thrift Stores Only</option>
             <option value="coffee_shop">Coffee Shops Only</option>
         </select>
-        <select name="rating" style="padding: 10px; border-radius: 6px;">
+        <select name="rating" style="flex: 1; padding: 10px; border-radius: 6px;">
             <option value="0">All Ratings</option>
             <option value="4">4+ Stars</option>
             <option value="3">3+ Stars</option>
             <option value="2">2+ Stars</option>
         </select>
-        <input type="submit" value="Search" style="padding: 10px 16px; background-color: #E3A87B; border: none; color: white; border-radius: 6px; font-weight: bold;">
+        <input type="submit" value="Search" style="flex: 1; padding: 10px; background-color: #E3A87B; border: none; color: white; border-radius: 6px; font-weight: bold;">
     </div>
 </form>
+
 
 
         {results_html}
