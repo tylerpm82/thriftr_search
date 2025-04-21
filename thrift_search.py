@@ -64,11 +64,10 @@ def index():
     if request.method == 'POST':
         address = request.form['address']
         store_filter = request.form.get('filter', 'both')
-        min_rating = float(request.form.get('rating', 0))
         lat, lng = geocode_address(address)
         
         if lat and lng:
-            nearest = get_closest_stores(lat, lng, filter_by=store_filter, min_rating=min_rating)
+            nearest = get_closest_stores(lat, lng, filter_by = store_filter)
             results_html = "<h3>Nearest Thrift Stores:</h3><ul>"
             for dist, store in nearest:
                 results_html += f"<li><b>{store['name']}</b><br>{store['address']}<br>📍 {round(dist, 2)} miles away</li>"
@@ -147,28 +146,15 @@ def index():
 <body>
     <div class="container">
         <h2>🧭 Find Thrift Stores Near You</h2>
-        <form method="POST" style="width: 100%; max-width: 600px; margin: 0 auto;">
-    <div style="margin-bottom: 10px;">
-        <input type="text" name="address" placeholder="Enter your address..." required
-               style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #ccc; box-sizing: border-box;">
-    </div>
-    <div style="display: flex; justify-content: space-between; gap: 10px;">
-        <select name="filter" style="flex: 1; padding: 10px; border-radius: 6px;">
-            <option value="both">All</option>
-            <option value="thrift_store">Thrift Stores Only</option>
-            <option value="coffee_shop">Coffee Shops Only</option>
-        </select>
-        <select name="rating" style="flex: 1; padding: 10px; border-radius: 6px;">
-            <option value="0">All Ratings</option>
-            <option value="4">4+ Stars</option>
-            <option value="3">3+ Stars</option>
-            <option value="2">2+ Stars</option>
-        </select>
-        <input type="submit" value="Search" style="flex: 1; padding: 10px; background-color: #E3A87B; border: none; color: white; border-radius: 6px; font-weight: bold;">
-    </div>
+        <form method="POST">
+    <input type="text" name="address" placeholder="Enter your address..." required>
+    <select name="filter" style="padding: 10px; border-radius: 6px;">
+        <option value="both">All</option>
+        <option value="thrift_store">Thrift Stores Only</option>
+        <option value="coffee_shop">Coffee Shops Only</option>
+    </select>
+    <input type="submit" value="Search">
 </form>
-
-
 
         {results_html}
     </div>
@@ -184,4 +170,3 @@ if __name__ == '__main__':
 
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port)
-
